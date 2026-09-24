@@ -1,0 +1,47 @@
+{
+  "name": "@manthan/icons",
+  "version": "0.1.0",
+  "description": "Manthan icon set: 24px stroke icons as framework-agnostic data, raw SVG and an SVG sprite.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tech-manthan/manthan-icons"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./all": {
+      "types": "./dist/all.d.ts",
+      "import": "./dist/all.js"
+    },
+    "./sprite.svg": "./dist/sprite.svg",
+    "./icons.json": "./dist/icons.json",
+    "./svg/*": "./dist/svg/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "icons"
+  ],
+  "scripts": {
+    "generate": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs && tsup",
+    "preview": "node scripts/preview.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "pretest": "node scripts/build.mjs",
+    "pretypecheck": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}
