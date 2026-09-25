@@ -1,6 +1,6 @@
 # @manthan/icons
 
-126 hand-drawn 24×24 stroke icons for the [Manthan UI](https://github.com/tech-manthan/manthan-base) design system.
+134 hand-drawn 24×24 stroke icons for the [Manthan UI](https://github.com/tech-manthan/manthan-base) design system.
 
 Each icon is stored once, as framework-agnostic data (`IconNode`). Every Manthan binding renders that same data:
 
