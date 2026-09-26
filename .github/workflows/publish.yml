@@ -15,7 +15,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     # Skips entirely (not a failure) until NPM_TOKEN is added as a repo secret.
-    if: ${{ secrets.NPM_TOKEN != '' }}
+    if: secrets.NPM_TOKEN != ''
     permissions:
       contents: write
       pull-requests: write
