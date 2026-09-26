@@ -1,0 +1,41 @@
+name: Release
+
+# SKELETON — not wired to actually publish yet. Needs an NPM_TOKEN repo
+# secret (an npm automation token for the @manthan org/scope) before the
+# `changesets/action` publish step below can succeed; until then this runs
+# safely and fails cleanly at that one step. See CLAUDE.md roadmap item 2.
+
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Create a "Version Packages" PR, or publish when one is merged
+        uses: changesets/action@v1
+        with:
+          version: npm run version-packages
+          publish: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
