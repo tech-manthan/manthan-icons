@@ -14,11 +14,14 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   release:
     runs-on: ubuntu-latest
-    # Skips entirely (not a failure) until NPM_TOKEN is added as a repo secret.
-    if: secrets.NPM_TOKEN != ''
     permissions:
       contents: write
       pull-requests: write
+    # `secrets` isn't readable in a job/step `if:` at all (GitHub Actions
+    # restriction — only `env` is) — mirror the secret into env so the last
+    # step can skip cleanly instead of failing when NPM_TOKEN isn't set yet.
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -34,6 +37,7 @@ jobs:
         run: npm run build
 
       - name: Create a "Version Packages" PR, or publish when one is merged
+        if: ${{ env.NPM_TOKEN != '' }}
         uses: changesets/action@v1
         with:
           version: npm run version-packages
